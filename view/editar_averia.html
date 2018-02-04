@@ -1,0 +1,165 @@
+<script type="text/javascript">
+      
+    function delete_documento(name)
+      {
+         if (confirm("¿Realmente desea eliminar " + name + "?"))
+            window.location.href = "{$fsc->url()}&delete=" + name;
+      }
+</script>
+
+
+{include="header"}
+
+{if="$fsc->editar"}
+
+<div role="tabpanel">
+    <ul class="nav nav-tabs" role="tablist">
+        
+        <li role="presentation" class="active">
+         <a href="#home" aria-controls="home" role="tab" data-toggle="tab">
+            <span class="glyphicon glyphicon-pencil"></span>
+            <span class="hidden-xs">&nbsp; Modificar Datos Generales</span>
+            
+         </a>
+      </li>
+            
+        {loop="$fsc->extensions"}
+            {if="$value->type=='tab'"}
+            <li role="presentation">
+               <a href="#ext_{$value->name}" aria-controls="ext_{$value->name}" role="tab" data-toggle="tab">{$value->text}</a>
+            </li>
+            {/if}
+        {/loop}
+        
+    </ul>
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="home">
+
+            <form class="form" action="{$fsc->url()}" enctype="multipart/form-data" method="post">
+                <div class="panel panel-info" style="margin-left: 5px; margin-right: 5px;">
+                    
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label>Id Averia</label>
+                                        <input type="text" value="{$fsc->editar->idaveria}" name="idaveria" id="idaveria" class="form-control" readonly="readonly">
+                                    </div> 
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label>Id Aparato</label>
+                                        <input type="text" value="{$fsc->editar->idaparato}" name="idaparato" id="idaparato" class="form-control" >
+                                    </div> 
+                                </div>
+
+                                <div class="col-sm-8">
+                                    <div class="form-group">
+                                        <a href="{$fsc->tablaaparatos->url()}">Aparato</a>:
+                                        <select class="form-control" name="aparato" >
+                                        {loop="$fsc->tablaaparatos->all()"}
+                                        {if="$value->idaparato==$fsc->editar->idaparato"}             
+                                        <option value="{$value->modelo}" selected="">{$value->marca}--{$value->modelo}--{$value->chasis}</option>
+                                        {else}
+                                        <option value="{$value->modelo}" >{$value->marca}--{$value->modelo}--{$value->chasis}</option>
+                                        {/if}
+                                        {/loop}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <a href="index.php?page=admin_users">Usuario</a>:
+                                        <select class="form-control" name="usuario" >
+                                        {loop="$fsc->fs_user->all()"}
+                                        {if="$value->nick==$fsc->editar->usuario"}             
+                                        <option value="{$value->nick}" selected="">{$value->nick}</option>
+                                        {else}
+                                        <option value="{$value->nick}" >{$value->nick}</option>
+                                        {/if}
+                                        {/loop}
+                                        </select>
+                                    </div>    
+
+                                    <div class="form-group">
+                                        <a href="{$fsc->tablasintomas->url()}">Sección</a>:
+                                        <select class="form-control" name="familia" >
+                                        {loop="$fsc->tablasintomas->all()"}
+                                        {if="$value->fam_sintoma==$fsc->editar->familia"}             
+                                        <option value="{$value->fam_sintoma}" selected="">{$value->fam_sintoma}</option>
+                                        {else}
+                                        <option value="{$value->fam_sintoma}" >{$value->fam_sintoma}</option>
+                                        {/if}
+                                        {/loop}
+                                        </select>
+                                    </div>  
+
+                                    <div class="form-group">
+                                        <label>Sintoma</label>
+                                        <textarea name="sintoma" rows="5" id="sintoma" class="form-control">{$fsc->editar->sintoma}
+                                        </textarea>       
+                                        </div> 
+
+                                    <div class="form-group">
+                                        <label>Solucion</label>
+                                        <textarea name="solucion" rows="5" id="solucion" class="form-control">{$fsc->editar->solucion}
+                                        </textarea>       
+                                    </div> 
+
+                                    <div class="form-group">
+                                        <label>Enlace</label>
+                                        <input type="text" value="{$fsc->editar->enlace}" name="enlace" id="enlace" class="form-control" placeholder="Pon aquí el enlace al origen del foro o web">
+                                        {if="$fsc->editar->enlace"}
+                                        <a href="{$fsc->editar->enlace}" target="_blank" title="Se abre en una pestaña aparte">Abrir enlace</a>
+                                        {/if}
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>    
+                    </div>
+
+                    <div class="panel-footer text-right">    
+                            <div class="dropdown">
+                            <button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp; Eliminar
+                                    <span class="caret"></span>
+                            </button>
+                                    <ul class="dropdown-menu" role="menu">
+
+                                        <li><a href="index.php?page=editar_averia&borrar={$fsc->editar->idaveria}" class="btn btn-warning">
+                                        <span class="glyphicon glyphicon-fire" ></span>&nbsp; Confirmar</a></li>
+
+                                     </ul>
+
+
+                            <button type="submit" class="btn btn-success">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                    &nbsp; Guardar
+                            </button>
+                            </div>
+                    </div>    
+
+                </div>
+
+
+            </form>
+        </div>
+    
+        {loop="$fsc->extensions"}
+        {if="$value->type=='tab'"}
+        <div role="tabpanel" class="tab-pane" id="ext_{$value->name}">
+            <iframe src="index.php?page={$value->from}{$value->params}&id={$fsc->editar->idaveria}" width="100%" height="2000" frameborder="0"></iframe>
+        </div>
+        {/if}
+        {/loop}
+
+    </div>   
+</div>    
+{/if}
+
+{include="footer"}

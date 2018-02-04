@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : aparatos.xml
+    Description:
+        Estructura de la tabla aparatos.
+-->
+<tabla>
+    <columna>
+        <nombre>idaveria</nombre>
+        <tipo>serial</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>idaparato</nombre>
+        <tipo>integer</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>familia</nombre>
+        <tipo>varchar(30)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>sintoma</nombre>
+        <tipo>text</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    
+    <columna>
+        <nombre>solucion</nombre>
+        <tipo>text</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>enlace</nombre>
+        <tipo>varchar(200)</tipo>
+        <nulo>YES</nulo>
+    </columna>
+    <columna>
+        <nombre>usuario</nombre>
+        <tipo>varchar(12)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <restriccion>
+        <nombre>aparatos_pkey</nombre>
+        <consulta>PRIMARY KEY (idaveria)</consulta>
+    </restriccion>
+    <restriccion>
+      <nombre>relacion_aparato</nombre>
+      <consulta>FOREIGN KEY (idaparato)
+      REFERENCES tablaaparatos (idaparato)
+      ON DELETE CASCADE ON UPDATE CASCADE</consulta>
+   </restriccion>
+   <restriccion>
+      <nombre>relacion_familia_sintomas</nombre>
+      <consulta>FOREIGN KEY (familia)
+      REFERENCES tablasintomas (fam_sintoma)
+      ON DELETE CASCADE ON UPDATE CASCADE</consulta>
+   </restriccion>
+   <restriccion>
+      <nombre>relacion_usuarios</nombre>
+      <consulta>FOREIGN KEY (usuario)
+      REFERENCES fs_users (nick)
+      ON DELETE CASCADE ON UPDATE CASCADE</consulta>
+   </restriccion>
+</tabla>

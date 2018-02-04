@@ -1,0 +1,27 @@
+{include="header"}
+
+<div class="container-fluid">
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="text-left">Tipo de Aparato</th>
+                <th class="text-left">Descripción</th>
+            </tr>
+
+        </thead>
+       {loop="$fsc->lista_tipos"}
+       <tr>
+           <td>{$value->tipo}</td>
+           <td>{$value->descripcion}</td>
+
+       </tr>
+       {/loop} 
+
+    </table>
+    
+</div>    
+
+
+
+{include="footer"}

@@ -1,0 +1,213 @@
+{include="header"}
+
+<script type="text/javascript">
+   $(document).ready(function() {
+      /* Todo lo que metas aquí es equivalente a un evento onload() */
+      document.getElementById('buscar').focus();
+      {if="$fsc->editar"} 
+      $("#ModalEditar").modal('show'); //Carga el formulario modal si hay edición
+      {/if}
+   });
+</script>
+
+
+
+<!-- IMPUT DE BUSQUEDA -->
+<div class="col-sm-2 col-xs-12">
+    <form name="f_custom_search" action="{$fsc->url()}" method="post" class="form">
+        <div class="input-group">
+            <input class="form-control" type="text" name="query" id="buscar" value="{$fsc->query}" autocomplete="off" placeholder="Buscar">
+               <span class="input-group-btn hidden-sm">
+                  <button class="btn btn-primary" type="submit">
+                     <span class="glyphicon glyphicon-search"></span>
+                  </button>
+               </span>
+        </div>
+    </form>
+</div>
+
+
+
+<!-- BOTON DE RECARGAR PAGINA -->
+<div class="btn-group hidden-xs">
+            <a class="btn btn-sm btn-default" href="{$fsc->url()}" title="Recargar la página">
+               <span class="glyphicon glyphicon-refresh"></span>
+            </a>
+            
+</div>
+
+
+
+<!-- TABLA DE AVERIAS -->
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th class="text-left">ID</th>
+            <th class="text-center">Aparato</th>
+            <th class="text-center">Sintoma</th>
+            <th class="text-center">Solución</th>
+        </tr>
+        
+    </thead>
+   {loop="$fsc->lista_averias"}
+   <tr>
+       <td><a href="{$fsc->url()}&id={$value->idaveria}" title="Modificación resumida">{$value->idaveria}</a> <a href="index.php?page=editar_averia&id={$value->idaveria}" target="_blank"><span class="glyphicon glyphicon-pencil" aria-hidden="true" title="Modificar Y añadir fotos o documentos adjuntos" ></span></a></td>
+       <td class="success">    
+           <ul class="list-unstyled">      
+                <li>Marca:  {$value->marca}</li>
+                <li>Modelo: {$value->modelo}</li>
+                <li>Chasis: {$value->chasis}</li>
+                <li>Sección: {$value->familia}</li>
+                <li>ID aparato: {$value->idaparato}</li>
+            </ul> 
+       </td>   
+              
+       <td>{$value->sintoma}</td>
+       <td>{$value->solucion}</td>
+   </tr>
+   {/loop} 
+    
+</table>
+
+<!-- FORMULARIO MODAL PARA EDITAR -->
+
+{if="$fsc->editar"}
+<form class="form-horizontal" role="form" action="{$fsc->url()}" enctype="multipart/form-data" name="for_editar_aparato" method="post" >
+<div class="modal fade" id="ModalEditar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Editando la Avería</h4>
+      </div>
+    <div class="modal-body">
+        <div class="row" style="margin-left: 15px; margin-right: 15px; background-color: #D9EDF7; ">
+        <div class="col-md-12">
+         
+            <div class="col-md-2">    
+               <div class="form-group">
+               <label>ID</label>
+               <input type="tex" value="{$fsc->editar->idaveria}" name="idaveria" id="idaveria" class="form-control" readonly="readonly">
+               </div> 
+            </div> 
+            
+            <div class="col-md-5">
+               <div class="form-group">
+               <label>Id Aparato</label>
+               <input type="tex" value="{$fsc->editar->idaparato}" name="idaparato" id="idaparato" class="form-control" >
+               </div> 
+            </div>
+            
+            <div class="col-md-5"> 
+               <div class="form-group">
+               <label>Usuario</label>
+               <select class="form-control" name="usuario" >
+               {loop="$fsc->fs_user->all()"}
+               {if="$value->nick==$fsc->editar->usuario"}             
+               <option value="{$value->nick}" selected="">{$value->nick}</option>
+               {else}
+               <option value="{$value->nick}" >{$value->nick}</option>
+               {/if}
+               {/loop}
+               </select>
+               </div>    
+            </div>
+            
+        </div>
+            
+        
+        <div class="col-md-12">    
+            <div class="col-md-8">  
+            <div class="form-group">
+               <a href="{$fsc->tablaaparatos->url()}">Aparato</a>:
+               <select class="form-control" name="aparato" >
+               {loop="$fsc->tablaaparatos->all()"}
+               {if="$value->idaparato==$fsc->editar->idaparato"}             
+               <option value="{$value->modelo}" selected="">{$value->marca}--{$value->modelo}--{$value->chasis}</option>
+               {else}
+               <option value="{$value->modelo}" >{$value->marca}--{$value->modelo}--{$value->chasis}</option>
+               {/if}
+               {/loop}
+               </select>
+            </div>
+            </div>  
+            
+            
+            <div class="col-md-12">
+            
+            
+            <div class="form-group">
+               <a href="{$fsc->tablasintomas->url()}">Sección</a>:
+               <select class="form-control" name="familia" >
+               {loop="$fsc->tablasintomas->all()"}
+               {if="$value->fam_sintoma==$fsc->editar->familia"}             
+               <option value="{$value->fam_sintoma}" selected="">{$value->fam_sintoma}</option>
+               {else}
+               <option value="{$value->fam_sintoma}" >{$value->fam_sintoma}</option>
+               {/if}
+               {/loop}
+               </select>
+            </div>    
+           
+           
+           
+           </div>
+            
+           <div class="col-md-12">
+              
+              <div class="form-group">
+              <label>Sintoma</label>
+              <textarea name="sintoma" rows="3" id="sintoma" class="form-control">{$fsc->editar->sintoma}
+              </textarea>       
+              </div> 
+            
+            <div class="form-group">
+              <label>Solucion</label>
+              <textarea name="solucion" rows="5" id="solucion" class="form-control">{$fsc->editar->solucion}
+              </textarea>       
+              </div> 
+               
+            <div class="form-group">
+               <label>Enlace</label>
+               <input type="tex" value="{$fsc->editar->enlace}" name="enlace" id="enlace" class="form-control" placeholder="Pon aquí el enlace al origen del foro o web">
+            </div> 
+               
+           </div>
+        
+        </div>
+        </div>    
+    </div>
+    <div class="modal-footer">
+        
+               <div class="dropdown">
+                    <button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp; Eliminar
+                        <span class="caret"></span>
+                    </button>
+                        <ul class="dropdown-menu" role="menu">
+    
+                            <li><a href="{$fsc->url()}&borrar={$fsc->editar->idaveria}" class="btn btn-warning">
+                            <span class="glyphicon glyphicon-fire" ></span>&nbsp; Confirmar</a></li>
+    
+                         </ul>
+                    
+  
+                    <button type="submit" class="btn btn-success">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        &nbsp; Guardar
+                    </button>
+                    <button type="button" class="btn btn-info" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-share" aria-hidden="true"></span>    
+                        &nbsp; Cerrar
+                    </button>
+                </div>
+        </div>
+    </div>
+  </div>
+</div>
+</form>
+{/if}
+
+
+
+{include="footer"}

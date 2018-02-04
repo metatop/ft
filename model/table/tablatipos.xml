@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : tablatipos.xml
+    Description:
+        Estructura de la tabla tipos.
+-->
+<tabla>
+    <columna>
+        <nombre>tipo</nombre>
+        <tipo>varchar(30)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>descripcion</nombre>
+        <tipo>varchar(500)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>logo</nombre>
+        <tipo>text</tipo>
+        <nulo>YES</nulo>
+    </columna>
+    <restriccion>
+        <nombre>tipos_pkey</nombre>
+        <consulta>PRIMARY KEY (tipo)</consulta>
+    </restriccion>
+</tabla>

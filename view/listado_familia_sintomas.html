@@ -1,0 +1,25 @@
+{include="header"}
+
+<div  style="margin-left: 5px; margin-right: 5px; margin-top: 5px; margin-bottom: 5px;">
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="text-left">Familia Sintomas</th>
+                <th class="text-left">Descripción</th>
+            </tr>
+
+        </thead>
+       {loop="$fsc->resultados"}
+       <tr>
+           <td>{$value->fam_sintoma}</td>
+           <td>{$value->descripcion}</td>
+
+       </tr>
+       {/loop} 
+
+    </table>
+
+</div>
+
+{include="footer"}

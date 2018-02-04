@@ -1,0 +1,105 @@
+{include="header"}
+
+<script type="text/javascript">
+    $(document).ready(function() {
+      /* Todo lo que metas aquí es equivalente a un evento onload() */
+      document.getElementById('sintoma').focus(); //lleva el foco al campo indicado
+                
+   });
+</script>
+
+{if="$fsc->id_aparato"}
+<div style="margin-left: 5px; margin-right: 5px; margin-bottom: 15px">
+    
+        <a class="btn btn-info" href="index.php?page=nuevo_doc_averia&id={$fsc->ultimoID}" role="button" target="_self">
+            <span class="glyphicon glyphicon-plus"></span>
+            <span class="hidden-xs">&nbsp; Añadir IMAGENES ó DOCUMENTOS a ésta avería</span>
+        </a>
+   
+    
+        <a class="btn btn-success" href="index.php?page=listado_aparatos_admin" target="_self">
+            <span class="glyphicon glyphicon-search"></span>
+            <span class="hidden-xs">&nbsp; Buscar Averías</span>
+        </a>
+    
+    
+        <a class="btn btn-primary" href="index.php?page=nueva_averia_aparato_admin&id={$fsc->id_aparato}" target="_self">
+            <span class="glyphicon glyphicon-plus"></span>
+            <span class="hidden-xs">&nbsp; Añadir OTRA Avería al mismo aparato</span>
+        </a>
+    
+    
+</div>
+{/if}
+
+{if="$fsc->averia_por_aparato"} 
+
+<form class="form" action="{$fsc->url()}" enctype="multipart/form-data" method="post" style="margin-left: 20px; margin-right: 50px;" >
+<h2>Añadir avería a éste aparato</h2> 
+<h3>{$fsc->averia_por_aparato->marca} -- Modelo: {$fsc->averia_por_aparato->modelo} -- Chasis: {$fsc->averia_por_aparato->chasis}</h3>
+  
+  <div class="form-group">
+    
+    <input type="hidden" name="idaparato" class="form-control" value="{$fsc->averia_por_aparato->idaparato}"/>
+    
+  </div>
+    
+     
+      
+  <div class="form-group">
+    <label>Sintoma</label>
+    <textarea name="sintoma" id="sintoma" class="form-control" placeholder="Introducir el Sintoma" required>
+    </textarea>       
+  </div>
+    
+  <div class="form-group">
+    <label>Solución</label>
+    <textarea name="solucion" id="sintoma" rows="7" class="form-control" placeholder="Introducir la Solución" required>
+    </textarea>
+  </div>  
+  
+  <div class="form-group">
+    <a href="{$fsc->tablasintomas->url()}">Sección</a>:
+       <select class="form-control" name="familia" required="required">
+            
+           <option value="">Seleccionar Sección</option>
+           <option value="">--------------------</option>
+           
+           {loop="$fsc->tablasintomas->all()"}
+                             
+               <option value="{$value->fam_sintoma}">{$value->fam_sintoma}</option>
+           
+            {/loop}
+       </select>
+  </div> 
+  
+  <div class="form-group">
+    <a href="{$fsc->user->url()}">Usuario</a>:
+       <select class="form-control" name="usuario" required="required">
+                            
+           {loop="$fsc->fs_user->all()"}
+           {if="$value->nick==$fsc->averia_por_aparato->usuario"}           
+            <option value="{$value->nick}" selected="">{$value->nick}</option>
+            {else}                 
+            <option value="{$value->nick}">{$value->nick}</option>
+            {/if}       
+           {/loop}
+       </select>
+  </div> 
+  
+      
+  <div class="form-group">
+    <label>Enlace</label>
+    <input type="text" name="enlace" class="form-control" placeholder="Introducir el enlace al foro o web">
+  </div> 
+     
+  
+<button type="submit" class="btn btn-success">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    &nbsp; Guardar
+</button>
+</form>
+
+{/if}
+
+{include="footer"}

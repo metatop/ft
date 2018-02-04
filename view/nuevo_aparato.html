@@ -1,0 +1,129 @@
+{include="header"}
+
+{if="$fsc->ultimoID"}
+
+<script type="text/javascript">
+   function pulsar() {
+       alert("USA EL FORMULARIO DE ABAJO PARA AÑADIR OTRO APARATO");
+       modelo.focus();
+   }
+</script>
+
+<div style="margin-left: 5px; margin-right: 5px; margin-bottom: 15px">
+    <div class="btn-group">
+        <a class="btn btn-primary" href="index.php?page=nueva_averia_aparato_admin&id={$fsc->ultimoID}" target="_self">
+            <span class="glyphicon glyphicon-plus"></span>
+            <span class="hidden-xs">&nbsp; Añadir Avería a éste nuevo aparato</span>
+        </a>
+    </div>
+    <div class="btn-group">
+        <a class="btn btn-success" href="index.php?page=listado_aparatos" target="_self">
+            <span class="glyphicon glyphicon-search"></span>
+            <span class="hidden-xs">&nbsp; Buscar Averías</span>
+        </a>
+    </div>
+    <div class="btn-group">
+        <a class="btn btn-info" onClick="pulsar();">
+            <span class="glyphicon glyphicon-hand-down"></span>
+            <span class="hidden-xs">&nbsp; Añadir otro Aparato</span>
+        </a>
+    </div>
+</div>
+
+{/if}
+
+<script type="text/javascript">
+    $(document).ready(function() {
+      /* Todo lo que metas aquí es equivalente a un evento onload() */
+      document.getElementById('modelo').focus(); //leva el foco al campo indicado
+                
+   });
+</script>
+
+
+<form class="form" action="{$fsc->url()}" enctype="multipart/form-data" method="post">
+    <div class="panel panel-info" style="margin-left: 5px; margin-right: 5px;">
+        <div class="panel-heading">
+        <h3 class="panel-title">Nuevo Aparato</h3>
+        </div>
+    
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-8">
+                      <div class="form-group">
+                        <label>Modelo</label>
+                        <input type="text" name="modelo" id="modelo" class="form-control" placeholder="Introducir el nuevo Modelo" required="required" onkeyup="javascript:this.value=this.value.toUpperCase();">
+                      </div>
+
+                      <div class="form-group">
+                        <a href="{$fsc->tablamarcas->url()}">Marca</a>:
+                           <select class="form-control" name="marca" required >
+
+                               <option value="">Seleccionar la marca</option>
+                               <option value="">--------------------</option>
+
+                               {loop="$fsc->tablamarcas->all()"}
+
+                               <option value="{$value->marca}">{$value->marca}</option>
+
+                                {/loop}
+                           </select>
+                      </div>
+
+                      <div class="form-group">
+                        <a href="{$fsc->tablatipos->url()}">Tipo de Aparato</a>:
+                           <select class="form-control" name="tipo" required >
+
+                               <option value="">Seleccionar un tipo de aparato</option>
+                               <option value="">--------------------</option>
+
+                               {loop="$fsc->tablatipos->all()"}
+
+                                   <option value="{$value->tipo}">{$value->tipo}</option>
+
+                                {/loop}
+                           </select>
+                      </div>
+
+                      <div class="form-group">
+                        <a href="{$fsc->tablachasis->url()}">Chasis</a>:
+                           <select class="form-control" name="chasis" required>
+
+                               <option value="">Seleccionar el chasis</option>
+                               <option value="">--------------------</option>
+
+                               {loop="$fsc->tablachasis->all()"}
+
+                                   <option value="{$value->chasis}">{$value->chasis}</option>
+
+                                {/loop}
+                           </select>
+                      </div>  
+                </div>
+                <div class="col-sm-4" style="margin-top: 20px; margin-bottom: 15px;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <h3 class="panel-title">Añadir una imagen</h3>
+                        </div>
+                        <div class="panel-body"> 
+                            <div class="form-group">
+                                <label>Subir imagen</label>
+                                <input type="file" name="logo" class="file" accept="image/gif, image/jpeg, image/png">
+                                <p class="help-block">El tamaño máximo de la imágen es de 1Mb.</p>
+                            </div>
+                        </div>    
+                    </div>    
+                </div>    
+            </div>    
+        </div>
+        <div class="panel-footer text-right">
+            <button type="submit" class="btn btn-success">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                &nbsp; Guardar
+            </button>
+        </div>    
+        
+    </div>   
+</form>
+
+{include="footer"}

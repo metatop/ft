@@ -1,0 +1,140 @@
+
+
+
+{include="header"}
+
+{if="$fsc->editar"} 
+
+<script type="text/javascript">
+      
+      function delete_documento(name)
+      {
+         if (confirm("¿Realmente desea eliminar " + name + "?"))
+            window.location.href = "{$fsc->url()}&delete=" + name;
+      }
+</script>
+
+<div role="tabpanel">
+    <ul class="nav nav-tabs" role="tablist">
+        
+        <li role="presentation" class="active">
+             <a href="#home" aria-controls="home" role="tab" data-toggle="tab">
+                <span class="glyphicon glyphicon-edit"></span>
+                <span class="hidden-xs">&nbsp; Datos Generales</span>
+
+             </a>
+        </li>
+            
+        {loop="$fsc->extensions"}
+            {if="$value->type=='tab'"}
+            <li role="presentation">
+               <a href="#ext_{$value->name}" aria-controls="ext_{$value->name}" role="tab" data-toggle="tab">{$value->text}</a>
+            </li>
+            {/if}
+        {/loop}
+        
+    </ul>
+    
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="home">
+
+            <form class="form" action="{$fsc->url()}" enctype="multipart/form-data" method="post">
+                <div class="panel panel-info" style="margin-left: 5px; margin-right: 5px;">
+                    <div class="panel-heading">
+                    <h3 class="panel-title">Detalle del Aparato</h3>
+                    </div>
+                    <div class="panel-body">
+
+                        <div>
+                            <input type="hidden" value="{$fsc->editar->idaparato}" name="idaparato" id="idaparato" class="form-control">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+
+
+
+                                <div class="form-group">
+                                    <label>Modelo</label>
+                                    <input type="text"  readonly="readonly" value="{$fsc->editar->modelo}" name="modelo" id="modelo" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Marca</label>
+                                    <input type="text" readonly="readonly" value="{$fsc->editar->marca}" name="marca" id="modelo" class="form-control" />
+                                </div>    
+
+                                <div class="form-group">
+                                    <label>Tipo de Aparato</label>
+                                    <input type="text" readonly="readonly" value="{$fsc->editar->tipo}" name="tipo" id="modelo" class="form-control" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Chasis</label>
+                                    <input type="text" readonly="readonly" value="{$fsc->editar->chasis}" name="chasis" id="modelo" class="form-control" />
+                                </div> 
+
+
+                            </div>
+
+                            <div class="col-md-6" style="margin-top: 20px;">
+                                <div class="panel panel-default" style="height: 327px;">
+                                    <div class="panel-heading">
+                                        {if condition="$fsc->editar->logo"}
+                                        <h3 class="panel-title">Imagen del Aparato</h3> 
+                                        {else} 
+                                        <h3 class="panel-title">Añadir imagen del aparato</h3>
+                                        {/if}
+                                    </div>
+                                    <div class="panel-body" style="margin-left: 3px;">
+                                        {if condition="$fsc->editar->logo"}
+                                        {else}
+                                        <div class="form-group" >
+                                            <input type="file" name="logo" class="file" accept="image/gif, image/jpeg, image/png">
+                                            <p class="help-block">El tamaño de la imágen debe ser inferior a 15kb.</p>
+                                        </div>
+                                        {/if} 
+                                        {if condition="$fsc->editar->logo"}
+                                        <div class="thumbnail">
+                                            <img src="{$fsc->editar->logo}" style="max-height: 245;"/>
+                                        </div>
+                                        {else}
+                                        <div class="thumbnail">
+                                            <img src="/fortec/plugins/fortec/logos/imgdefecto.jpg" style="max-height: 170;"/>
+                                        </div>
+                                        {/if}
+                                        </div>
+                                    </div>
+                                </div>      
+                            </div>    
+                        </div>
+
+                        <div class="panel-footer text-right">    
+                            {if condition="$fsc->editar->logo"}
+                            <button type="submit" class="btn btn-success disabled">
+                            {else}
+                            <button type="submit" class="btn btn-success">
+                            {/if}    
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                &nbsp; Guardar
+                            </button>
+
+                        </div>
+                </div>
+            </form>
+    
+    </div>
+    {loop="$fsc->extensions"}
+        {if="$value->type=='tab'"}
+        <div role="tabpanel" class="tab-pane" id="ext_{$value->name}">
+            <iframe src="index.php?page={$value->from}{$value->params}&id={$fsc->editar->idaparato}" width="100%" height="2000" frameborder="0"></iframe>
+        </div>
+        {/if}
+        {/loop}
+    </div>
+</div>
+
+  
+{/if}
+
+{include="footer"}

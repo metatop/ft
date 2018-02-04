@@ -1,0 +1,138 @@
+{include="header"}
+
+<script type="text/javascript">
+   $(document).ready(function() {
+      /* Todo lo que metas aquí es equivalente a un evento onload() */
+      {if="$fsc->editar"} 
+      $("#ModalEditar").modal('show'); //Carga el formulario modal si hay edición
+      {/if}
+   });
+</script>
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th class="text-left">Marca</th>
+            <th class="text-left">Descripción</th>
+            <th class="text-left">Web</th>
+            <th class="text-left">eMail</th>
+        </tr>
+        
+    </thead>
+   {loop="$fsc->lista_marcas"}
+   <tr>
+       <td>
+           <a href="{$fsc->url()}&id={$value->marca}" id="modaledit">{$value->marca}</a>
+           
+       </td>
+       <td>{$value->descripcion}</td>
+       <td> <a href="{$value->web}" target="_blank">{$value->web}</a></td>
+       <td>{$value->email}</td>
+   </tr>
+   {/loop} 
+    
+</table>
+
+<!-- FORMULARIO MODAL PARA EDITAR -->
+{if="$fsc->editar"}
+<form class="form-horizontal" role="form" action="{$fsc->url()}" enctype="multipart/form-data" name="for_editar_marca" method="post" >
+<div class="modal fade" id="ModalEditar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Editando la Marca</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row" style="margin-left: 15px; margin-right: 15px; background-color: #D9EDF7; " >
+        <div class="col-md-12">
+    
+         <!--<form class="form-horizontal" role="form" action="{$fsc->url()}" enctype="multipart/form-data" name="for_editar_marca" method="post" > -->
+            <div class="col-md-8">
+                
+                <div class="form-group">
+        
+                    <label><strong>Marca</strong></label>
+                <input type="text" name="marca" id="id" class="form-control" placeholder="Introducir nueva Marca" required="required" value="{$fsc->editar->marca}">
+                </div>
+                <div class="form-group">
+                    <label><strong>Descripción</strong></label>
+                <textarea class="form-control" name="descripcion" rows="2" placeholder="Comentario sobre la marca">{$fsc->editar->descripcion}</textarea>
+                </div>
+                <div class="form-group">
+                <label><strong>Dirección Web</strong></label>
+                <input type="text" class="form-control" name="web" placeholder="Página web del la marca" value="{$fsc->editar->web}">
+                </div>
+                <div class="form-group">
+                    <label><strong>Email</strong></label>
+                <input type="text" class="form-control" name="email" placeholder="Correo electrónico de ésta marca" value="{$fsc->editar->email}">
+                </div>
+                
+                <div class="form-group">
+                {if condition="$fsc->editar->logo"}
+                <label><strong>Subir otra imagen</strong></label>
+                {else}
+                <label><strong>Subir imagen</strong></label>
+                {/if}
+                <input type="file" name="logo" class="input-file" accept="image/gif, image/jpeg, image/png">
+                <p class="help-block">El tamaño de la imágen debe ser inferior a 1Mb.</p>
+                </div>
+            </div>
+    
+            <div class="col-md-4">
+                
+                {if condition="$fsc->editar->logo"}
+                <div class="thumbnail" style="margin-top: 25px;">
+                <img src="{$fsc->editar->logo}" />
+                </div>
+                {/if}
+            
+                <!--Esto es un comentario-->
+                
+
+                
+        
+            </div>        
+        
+  
+        
+
+
+    </div>
+</div>    
+      </div>
+        <div class="modal-footer">
+        
+               <div class="dropdown">
+                    <button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp; Eliminar
+                        <span class="caret"></span>
+                    </button>
+                        <ul class="dropdown-menu" role="menu">
+    
+                            <li><a href="{$fsc->url()}&borrar={$fsc->editar->marca}" class="btn btn-warning">
+                            <span class="glyphicon glyphicon-fire" ></span>&nbsp; Confirmar</a></li>
+    
+                         </ul>
+                    
+  
+                    <button type="submit" class="btn btn-success">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        &nbsp; Guardar
+                    </button>
+                    <button type="button" class="btn btn-info" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-share" aria-hidden="true"></span>    
+                        &nbsp; Cerrar
+                    </button>
+                </div>
+        </div>
+    </div>
+  </div>
+</div>
+</form>
+{/if}
+
+
+
+{include="footer"}

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : marcas.xml
+    Description:
+        Estructura de la tabla marcas.
+-->
+<tabla>
+    <columna>
+        <nombre>marca</nombre>
+        <tipo>varchar(30)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>descripcion</nombre>
+        <tipo>varchar(500)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>web</nombre>
+        <tipo>varchar(50)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>email</nombre>
+        <tipo>varchar(50)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>logo</nombre>
+        <tipo>text</tipo>
+        <nulo>YES</nulo>
+    </columna>
+    <restriccion>
+        <nombre>marcas_pkey</nombre>
+        <consulta>PRIMARY KEY (marca)</consulta>
+    </restriccion>
+</tabla>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : tablasintomas.xml
+    Description:
+        Estructura de la tabla familia sintomas.
+-->
+<tabla>
+    <columna>
+        <nombre>fam_sintoma</nombre>
+        <tipo>varchar(30)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>descripcion</nombre>
+        <tipo>varchar(256)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>logo</nombre>
+        <tipo>text</tipo>
+        <nulo>YES</nulo>
+    </columna>
+    <restriccion>
+        <nombre>fam_sintoma_pkey</nombre>
+        <consulta>PRIMARY KEY (fam_sintoma)</consulta>
+    </restriccion>
+</tabla>

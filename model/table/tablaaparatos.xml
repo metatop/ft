@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : aparatos.xml
+    Description:
+        Estructura de la tabla aparatos.
+-->
+<tabla>
+    <columna>
+        <nombre>idaparato</nombre>
+        <tipo>serial</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>modelo</nombre>
+        <tipo>varchar(50)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>marca</nombre>
+        <tipo>varchar(30)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    
+    <columna>
+        <nombre>tipo</nombre>
+        <tipo>varchar(30)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>chasis</nombre>
+        <tipo>varchar(30)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>logo</nombre>
+        <tipo>text</tipo>
+        <nulo>YES</nulo>
+    </columna>
+    <restriccion>
+        <nombre>aparatos_pkey</nombre>
+        <consulta>PRIMARY KEY (idaparato)</consulta>
+    </restriccion>
+    <restriccion>
+      <nombre>relacion_marca</nombre>
+      <consulta>FOREIGN KEY (marca)
+      REFERENCES tablamarcas (marca)
+      ON DELETE CASCADE ON UPDATE CASCADE</consulta>
+   </restriccion>
+   <restriccion>
+      <nombre>relacion_tipo</nombre>
+      <consulta>FOREIGN KEY (tipo)
+      REFERENCES tablatipos (tipo)
+      ON DELETE CASCADE ON UPDATE CASCADE</consulta>
+   </restriccion>
+   <restriccion>
+      <nombre>relacion_chasis</nombre>
+      <consulta>FOREIGN KEY (chasis)
+      REFERENCES tablachasis (chasis)
+      ON DELETE CASCADE ON UPDATE CASCADE</consulta>
+   </restriccion>
+</tabla>

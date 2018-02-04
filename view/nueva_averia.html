@@ -1,0 +1,71 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+      /* Todo lo que metas aquí es equivalente a un evento onload() */
+      document.getElementById('sintoma').focus(); //leva el foco al campo indicado
+                
+   });
+</script>
+
+{include="header"}
+
+
+<form class="form" action="{$fsc->url()}" enctype="multipart/form-data" method="post" style="margin-left: 20px; margin-right: 50px;" >
+  
+   <div class="form-group">
+    <a href="{$fsc->tablaaparatos->url()}">Aparato</a>:
+       <select class="form-control" name="idaparato" required="required">
+            {loop="$fsc->tablaaparatos->all()"}
+                             
+               <option value="{$value->idaparato}">{$value->idaparato}</option>
+           
+            {/loop}
+       </select>
+  </div>
+  
+  <div class="form-group">
+    <a href="{$fsc->tablasintomas->url()}">Sección</a>:
+       <select class="form-control" name="familia" required="required">
+            
+           <option value="">Seleccionar Sección</option>
+           <option value="">--------------------</option>
+           
+           {loop="$fsc->tablasintomas->all()"}
+                             
+               <option value="{$value->fam_sintoma}">{$value->fam_sintoma}</option>
+           
+            {/loop}
+       </select>
+  </div> 
+    
+  <div class="form-group">
+    <label>Sintoma</label>
+    <textarea name="sintoma" id="sintoma" class="form-control" placeholder="Introducir el Sintoma" required>
+    </textarea>       
+  </div>
+    
+  <div class="form-group">
+    <label>Solución</label>
+    <textarea name="solucion" id="sintoma" rows="7" class="form-control" placeholder="Introducir la Solución" required>
+    </textarea>
+  </div>  
+  
+  
+  
+  <div class="form-group">
+    <label>Usuario</label>
+    <input type="text" name="usuario" class="form-control" value={$fsc->user->nick}>
+  </div>
+    
+  <div class="form-group">
+    <label>Enlace</label>
+    <input type="text" name="enlace" class="form-control" placeholder="Introducir el enlace al foro o web">
+  </div> 
+     
+  
+<button type="submit" class="btn btn-success">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    &nbsp; Guardar
+</button>
+</form>
+
+{include="footer"}

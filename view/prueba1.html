@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+{include="header"}
+        <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+---------------------------------------------------------
+
+<a data-toggle="modal" href="#example" class="btn btn-primary btn-large">Abrir ventana modal</a>
+
+<!--<div class="modal fade" id="example" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
+
+<div id="example" class="modal" >
+<div class="modal-dialog">
+    <div class="modal-content">    
+<div class="modal-header">
+        <a data-dismiss="modal" class="close">×</a>
+        <h3>Cabecera de la ventana</h3>
+     </div>
+     <div class="modal-body">
+         <h4>Texto de la ventana</h4>
+        <p>Mas texto en la ventana.</p>                
+    </div>
+    <div class="modal-footer">
+        <a href="index.html" class="btn btn-success">Guardar</a>
+        <a href="#" data-dismiss="modal" class="btn">Cerrar</a>
+    </div>
+</div>
+    </div>
+</div>

@@ -1,0 +1,149 @@
+
+<script type="text/javascript">
+      
+      function delete_documento(name)
+      {
+         if (confirm("¿Realmente desea eliminar " + name + "?"))
+            window.location.href = "{$fsc->url()}&delete=" + name;
+      }
+</script>
+
+
+{include="header"}
+
+
+
+{if condition="$fsc->editar"}
+
+<div role="tabpanel">
+    <ul class="nav nav-tabs" role="tablist">
+        
+        <li role="presentation" class="active">
+             <a href="#home" aria-controls="home" role="tab" data-toggle="tab">
+                <span class="glyphicon glyphicon-edit"></span>
+                <span class="hidden-xs">&nbsp; Datos Generales</span>
+
+             </a>
+        </li>
+            
+        {loop="$fsc->extensions"}
+            {if="$value->type=='tab'"}
+            <li role="presentation">
+               <a href="#ext_{$value->name}" aria-controls="ext_{$value->name}" role="tab" data-toggle="tab">{$value->text}</a>
+            </li>
+            {/if}
+        {/loop}
+        
+    </ul>
+    
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="home">
+ 
+            <form class="form-horizontal" role="form" action="{$fsc->url()}" enctype="multipart/form-data" name="for_editar_marca" method="post" >   
+                <div class="panel panel-info" style="margin-left: 5px; margin-right: 5px;">
+
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Editar Marca</h3>
+                    </div>
+                    <div class="panel-body">    
+                        <div class="row">
+                            <div class="col-md-12">
+
+
+                                <div class="col-md-8">
+
+                                    <div class="form-group">
+                                        <label>Marca</label>
+                                        <input type="text" name="marca" id="id" class="form-control" placeholder="Introducir nueva Marca" required="required" value="{$fsc->editar->marca}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Descripción</label>
+                                        <textarea class="form-control" name="descripcion" rows="3" placeholder="Comentario sobre la marca">{$fsc->editar->descripcion}</textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label><strong>Dirección Web</strong></label>
+                                        <input type="text" class="form-control" name="web" placeholder="Página web del la marca" value="{$fsc->editar->web}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label><strong>Email</strong></label>
+                                        <input type="text" class="form-control" name="email" placeholder="Correo electrónico de ésta marca" value="{$fsc->editar->email}">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4" style="margin-top: 20px;">
+                                    <div class="panel panel-default" style="height: 327px;">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Añadir el logo de la marca</h3>
+                                        </div>
+                                        <div class="panel-body" style="margin-left: 3px;">
+
+                                            <div class="form-group" >
+                                                <input type="file" name="logo" class="file" accept="image/gif, image/jpeg, image/png">
+                                                <p class="help-block">El tamaño de la imágen debe ser inferior a 15kb.</p>
+                                            </div>
+
+                                            {if condition="$fsc->editar->logo"}
+                                            <div class="thumbnail">
+                                                <img src="{$fsc->editar->logo}" style="max-height: 170;"/>
+                                            </div>
+                                            {else}
+                                            <div class="thumbnail">
+                                                <img src="/fortec/plugins/fortec/logos/imgdefecto.jpg" style="max-height: 170;"/>
+                                            </div>
+                                            {/if}
+                                        </div>
+                                    </div>
+
+
+                                </div>        
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="panel-footer text-right">
+                        <div class="dropdown">
+                            <button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" >
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp; Eliminar
+                                <span class="caret"></span>
+                            </button>
+
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+
+                                <li role="presentation"><a role="menuitem" href="{$fsc->url()}&borrar={$fsc->editar->marca}" class="btn btn-warning">
+                                        <span class="glyphicon glyphicon-fire" aria-hidden="true"></span>&nbsp; Confirmar</a></li>
+
+                            </ul>
+
+
+                            <button type="submit" class="btn btn-success">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                &nbsp; Guardar
+                            </button>
+                        </div>   
+                    </div>
+
+                </div>
+            </form>  
+
+
+
+
+            
+        </div>
+        {loop="$fsc->extensions"}
+        {if="$value->type=='tab'"}
+        <div role="tabpanel" class="tab-pane" id="ext_{$value->name}">
+            <iframe src="index.php?page={$value->from}{$value->params}&id={$fsc->editar->marca}" width="100%" height="2000" frameborder="0"></iframe>
+        </div>
+        {/if}
+        {/loop}
+    </div>
+</div>    
+  
+
+{/if}
+
+
+{include="footer"}

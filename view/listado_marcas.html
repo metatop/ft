@@ -1,0 +1,70 @@
+{include="header"}
+
+<script type="text/javascript">
+    $(document).ready(function() {
+      /* Todo lo que metas aquí es equivalente a un evento onload() */
+      document.getElementById('buscar').focus(); //leva el foco al campo indicado
+              
+   });
+</script>
+
+<div  style="margin-left: 5px; margin-right: 5px; margin-top: 5px; margin-bottom: 5px;">
+
+    <div class="row">
+
+        <div class="col-sm-4 col-xs-10">
+                 <form name="f_custom_search" action="{$fsc->url()}" method="post" class="form">
+                    <div class="input-group">
+                       <input class="form-control" type="text" name="query" id="buscar" value="{$fsc->query}" autocomplete="off" placeholder="Buscar">
+                       <span class="input-group-btn hidden-sm">
+                          <button class="btn btn-primary" type="submit">
+                             <span class="glyphicon glyphicon-search"></span>
+                          </button>
+                       </span>
+                    </div>
+                 </form>
+        </div>
+
+        <div class="col-sm-3">    
+            <div class="btn-group hidden-xs">
+                    <a class="btn btn-sm btn-default" href="{$fsc->url()}" title="Recargar la página">
+                       <span class="glyphicon glyphicon-refresh"></span>
+                    </a>
+            </div>
+            <div class="btn-group">
+                <a class="btn btn-sm btn-success" href="index.php?page=nueva_marca" target="blank">
+                       <span class="glyphicon glyphicon-plus"></span>
+                       <span class="hidden-xs">&nbsp; Nueva</span>
+                    </a>
+            </div>    
+
+        </div>    
+
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="text-left">Marca</th>
+                <th class="text-left">Descripción</th>
+                <th class="text-left">Web</th>
+                <th class="text-left">eMail</th>
+            </tr>
+
+        </thead>
+        {loop="$fsc->resultados"}
+        <tr>
+            <td>
+               <a href="index.php?page=detalle_marca&folder=documarcas&id={$value->marca}" target="_blank">{$value->marca}</a>
+            </td>
+            <td>{$value->descripcion}</td>
+            <td> <a href="{$value->web}" target="_blank">{$value->web}</a></td>
+            <td>{$value->email}</td>
+        </tr>
+        {/loop} 
+
+    </table>
+
+</div>
+
+{include="footer"}

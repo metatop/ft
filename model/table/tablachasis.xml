@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : chasis.xml
+    Description:
+        Estructura de la tabla chasis.
+-->
+<tabla>
+    <columna>
+        <nombre>chasis</nombre>
+        <tipo>varchar(30)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>descripcion</nombre>
+        <tipo>varchar(500)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>fabricante</nombre>
+        <tipo>varchar(30)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>logo</nombre>
+        <tipo>text</tipo>
+        <nulo>YES</nulo>
+    </columna>
+    <restriccion>
+        <nombre>chasis_pkey</nombre>
+        <consulta>PRIMARY KEY (chasis)</consulta>
+    </restriccion>
+    <restriccion>
+      <nombre>relacion_fabricante_marca</nombre>
+      <consulta>FOREIGN KEY (fabricante)
+      REFERENCES tablamarcas (marca)
+      ON DELETE CASCADE ON UPDATE CASCADE</consulta>
+   </restriccion>
+</tabla>

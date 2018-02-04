@@ -1,0 +1,185 @@
+<script type="text/javascript">
+      
+      function delete_documento(name)
+      {
+         if (confirm("¿Realmente desea eliminar " + name + "?"))
+            window.location.href = "{$fsc->url()}&delete=" + name;
+      }
+   </script>
+
+
+{include="header"}
+
+{if="$fsc->editar"} 
+<form class="form" action="{$fsc->url()}" enctype="multipart/form-data" method="post">
+    <div class="panel panel-info" style="margin-left: 5px; margin-right: 5px;">
+        <div class="panel-heading">
+        <h3 class="panel-title">Modificar Aparato</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-8">
+        
+                    <div>
+                    <input type="hidden" value="{$fsc->editar->idaparato}" name="idaparato" id="idaparato" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                    <label>Modelo</label>
+                    <input type="text" value="{$fsc->editar->modelo}" name="modelo" id="modelo" class="form-control" required="required">
+                    </div>
+
+
+
+                    <div class="form-group">
+                    <a href="{$fsc->tablamarcas->url()}">Marca</a>:
+                    <select class="form-control" name="marca" >
+                        {loop="$fsc->tablamarcas->all()"}
+                        {if="$value->marca==$fsc->editar->marca"}           
+                        <option value="{$value->marca}" selected="">{$value->marca}</option>
+                        {else}                 
+                        <option value="{$value->marca}">{$value->marca}</option>
+                        {/if} 
+                        {/loop}
+                    </select>
+                    </div>
+
+                    <div class="form-group">
+                    <a href="{$fsc->tablatipos->url()}">Tipo de Aparato</a>:
+                    <select class="form-control" name="tipo" required="required">
+                        {loop="$fsc->tablatipos->all()"}
+                        {if="$value->tipo==$fsc->editar->tipo"}           
+                        <option value="{$value->tipo}" selected="">{$value->tipo}</option>
+                        {else}                 
+                        <option value="{$value->tipo}">{$value->tipo}</option>
+                        {/if}
+                        {/loop}
+                    </select>
+                    </div>
+
+                    <div class="form-group">
+                    <a href="{$fsc->tablachasis->url()}">Chasis</a>:
+                    <select class="form-control" name="chasis" required="required">
+                        {loop="$fsc->tablachasis->all()"}
+                        {if="$value->chasis==$fsc->editar->chasis"}           
+                        <option value="{$value->chasis}" selected="">{$value->chasis}</option>
+                        {else}                 
+                        <option value="{$value->chasis}">{$value->chasis}</option>
+                        {/if}
+                        {/loop}
+                    </select>
+                    </div>
+                </div>
+                
+                <div class="col-sm-4" style="margin-top: 20px; margin-bottom: 15px;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <h3 class="panel-title">Añadir una imagen</h3>
+                        </div>
+                        <div class="panel-body"> 
+                            <div class="form-group">
+                            {if condition="$fsc->editar->logo"}
+                            <label><strong>Subir otra imagen</strong></label>
+                            {else}
+                            <label><strong>Subir imagen</strong></label>
+                            {/if}
+                            <input type="file" name="logo" class="input-file" accept="image/gif, image/jpeg, image/png">
+                            <p class="help-block">El tamaño de la imágen debe ser inferior a 15kb.</p>
+                            </div>
+
+
+
+
+                            {if condition="$fsc->editar->logo"}
+                            <div class="thumbnail" style="margin-top: 25px;">
+                            <img src="{$fsc->editar->logo}" />
+                            </div>
+                            {/if}
+                        </div>    
+                    </div>    
+                </div>
+            </div>    
+        </div>
+                
+            <div class="panel-footer text-right">    
+                <div class="dropdown">
+                <button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown" >
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp; Eliminar
+                        <span class="caret"></span>
+                 </button>
+                        <ul class="dropdown-menu" role="menu">
+    
+                            <li><a href="index.php?page=editar_aparato&borrar={$fsc->editar->idaparato}" class="btn btn-warning">
+                            <span class="glyphicon glyphicon-fire" ></span>&nbsp; Confirmar</a></li>
+    
+                         </ul>
+                    
+        
+                <button type="submit" class="btn btn-success">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        &nbsp; Guardar
+                </button>
+                </div>
+            </div>    
+        
+    </div>
+       
+
+</form>
+
+
+<form enctype="multipart/form-data" action="{$fsc->url()}" method="post" class="form">
+<div class="panel panel-info" style="margin-left: 5px; margin-right: 5px;">  
+    
+        <div class="panel-heading">
+        <h3 class="panel-title">Documentos adjuntos</h3>
+        </div>
+        <div class="panel-body">
+                <div class="row">
+                  <div class="col-sm-4" style="margin-top: 15px; margin-bottom: 15px;">
+
+                        <input type="hidden" name="upload" value="TRUE"/>
+                        <div class="panel panel-default">
+                           <div class="panel-heading">
+                              <h3 class="panel-title">Añadir un documento adjunto</h3>
+                           </div>
+                           <div class="panel-body">
+                              <div class="form-group">
+                                 <input name="fdocumento" type="file"/>
+                              </div>
+                              <button class="btn btn-sm btn-primary" type="submit" onclick="this.disabled=true;this.form.submit();">
+                                 <span class="glyphicon glyphicon-floppy-disk"></span> &nbsp; Guardar
+                              </button>
+                           </div>
+                        </div>
+
+                  </div>
+
+
+
+                   <div class="container-fluid">
+                     {loop="$fsc->documentos"}
+                     <div class="col-sm-4" style="margin-top: 15px; margin-bottom: 15px;">
+                        <div class="btn-group">
+                           <a href="{$value['fullname']}" target="_blank" class="btn btn-bg btn-default">
+                              <span class="glyphicon glyphicon-file" aria-hidden="true"></span> &nbsp; {$value['name']}
+                           </a>
+                           <a href="#" class="btn btn-bg btn-default" title="Eliminar" onclick="delete_documento('{$value['name']}')">
+                              <span class="glyphicon glyphicon-trash"></span>
+                           </a>
+                        </div>
+                        <p class="help-block">
+                           Tamaño: {$value['filesize']} &nbsp;
+                           <span class="glyphicon glyphicon-calendar"></span> {$value['date']}
+                        </p>
+                     </div>
+                     {/loop}
+                   </div>
+                </div> 
+        </div>
+        
+</div>
+</form>  
+{/if}
+
+{include="footer"}

@@ -1,0 +1,128 @@
+{include="header"}
+
+{if="$fsc->editar"}
+
+
+
+<div role="tabpanel">
+    <ul class="nav nav-tabs" role="tablist">
+        
+        <li role="presentation" >
+            <a href="#home" aria-controls="home" role="tab" data-toggle="tab">
+            <span class="glyphicon glyphicon-pencil"></span>
+            <span class="hidden-xs">&nbsp; Datos avería</span>
+            
+            </a>
+        </li>
+            
+                
+    </ul>
+    <div class="tab-content">
+        <div role="tabpanel" id="home">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+
+                                <div class="col-sm-0">
+                                    
+                                        <input type="hidden" value="{$fsc->editar->idaveria}" name="idaveria" id="idaveria" class="form-control" readonly="readonly">
+                                    
+                                </div>
+
+                                <div class="col-sm-0">
+                                    
+                                        <input type="hidden" value="{$fsc->editar->idaparato}" name="idaparato" id="idaparato" class="form-control" readonly="readonly">
+                                    
+                                </div>
+                                
+                                <div class="col-sm-4">
+                                    
+                                        Aparato: {$fsc->editar->marca}--{$fsc->editar->modelo}--{$fsc->editar->chasis}
+                                    
+                                </div>
+                                
+                                <div class="col-sm-3">
+                                    
+                                        Sección: {$fsc->editar->familia}
+                                    
+                                </div>
+                                
+                                <div class="col-sm-2">
+                                    
+                                   Usuario: {$fsc->editar->usuario}
+                                    
+                                </div>
+                                
+                                
+
+                                
+                            </div>
+                            <div class="col-sm-12">
+                                
+                                <div class="col-sm-4">
+                                    
+                                        <label>Sintoma</label>
+                                        <textarea name="sintoma" rows="4" id="sintoma" class="form-control" readonly="readonly">{$fsc->editar->sintoma}
+                                        </textarea>       
+                                        
+                                </div>
+                                <div class="col-sm-8">
+                                    
+                                        <label>Solucion</label>
+                                        <textarea name="solucion" rows="4" id="solucion" class="form-control" readonly="readonly">{$fsc->editar->solucion}
+                                        </textarea>       
+                                    
+                                </div>
+                                {if="$fsc->editar->enlace"}
+                                    
+                                        <label>Enlace</label>
+                                        <a href="{$fsc->editar->enlace}" target="_blank" title="Se abre en una pestaña aparte">Abrir enlace</a>
+                                    
+                                {/if}
+                            </div>
+                            
+                        </div>    
+                    </div>
+                
+            
+        </div>
+    
+        
+
+    </div>   
+</div>
+
+<div role="tabpanel">
+    <ul class="nav nav-tabs" role="tablist">
+        
+                   
+        {loop="$fsc->extensions"}
+            {if="$value->type=='tab'"}
+            <li role="presentation">
+               <a href="#ext_{$value->name}" aria-controls="ext_{$value->name}" role="tab" data-toggle="tab">{$value->text}</a>
+            </li>
+            {/if}
+        {/loop}
+        
+    </ul>
+    <div class="tab-content">
+       
+        
+
+    </div>   
+</div>
+
+{loop="$fsc->extensions"}
+    {if="$value->type=='tab'"}
+        <div role="tabpanel" class="tab-pane" id="ext_{$value->name}">
+            <iframe src="index.php?page={$value->from}{$value->params}&id={$fsc->editar->idaveria}" width="100%" height="2000" frameborder="0"></iframe>
+        </div>
+    {/if}
+{/loop} 
+    
+
+
+
+{/if}
+
+{include="footer"}

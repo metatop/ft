@@ -1,0 +1,167 @@
+{include="header"}
+
+<script type="text/javascript">
+   $(document).ready(function() {
+      /* Todo lo que metas aquí es equivalente a un evento onload() */
+      document.getElementById('buscar').focus(); //leva el foco al campo indicado
+      {if="$fsc->editar"} 
+      $("#ModalEditar").modal('show'); //Carga el formulario modal si hay edición
+      {/if}
+   });
+</script>
+
+<div class="container-fluid" style="margin-top: 10px; margin-bottom: 10px;">
+    
+    <div class="row">
+  
+        <form name="f_custom_search" action="{$fsc->url()}" method="post" class="form">
+            <div class="col-sm-4 col-xs-12">
+                <div class="input-group">
+                    <input class="form-control" type="text" name="query" id="buscar" value="{$fsc->query}" autocomplete="off" placeholder="Buscar"/>
+                        <span class="input-group-btn hidden-sm">
+                        <button class="btn btn-primary" type="submit">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                        </span>
+                </div>
+            </div> 
+
+            <div class="col-sm-2">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="check_todos" {if="$fsc->todos"} checked="checked" {/if} value="TRUE" onchange="this.form.submit()" /> 
+                         Listar todos los chasis
+                    </label>
+                </div> 
+            </div> 
+        </form>
+     
+            <div class="col-sm-3">
+                <div class="btn-group hidden-xs">
+                    <a class="btn btn-sm btn-default" href="{$fsc->url()}" title="Recargar la página">
+                           <span class="glyphicon glyphicon-refresh"></span>
+                    </a>
+                </div>
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-success" href="index.php?page=nuevo_chasis" target="blank">
+                       <span class="glyphicon glyphicon-plus"></span>
+                       <span class="hidden-xs">&nbsp; Nuevo</span>
+                    </a>
+                </div>    
+            </div>
+    </div>
+    
+    
+    
+    
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th class="text-left">Chasis</th>
+            <th class="text-left">Fabricante</th>
+            <th class="text-left">Descripción</th>
+            <th class="text-left">Ver Averias de éste chasis</th>
+            
+        </tr>
+        
+    </thead>
+   {loop="$fsc->resultados"}
+   <tr>
+       <td><a href="{$fsc->url()}&id={$value->chasis}" >{$value->chasis}</a></td>
+       <td>{$value->fabricante}</td>
+       <td>{$value->descripcion}</td>
+       <td><a href="index.php?page=listado_averias_por_chasis&cod={$value->chasis}" target="_blank" title="Ver averías de éste chasis">Averias</a></td>
+       
+   </tr>
+   {/loop} 
+    
+</table>
+</div>
+
+<!-- FORMULARIO MODAL PARA EDITAR -->
+{if="$fsc->editar"}
+<form class="form-horizontal" role="form" action="{$fsc->url()}" enctype="multipart/form-data" name="for_editar_chasis" method="post" >
+<div class="modal fade" id="ModalEditar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Detalle del Chasis</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row" style="margin-left: 15px; margin-right: 15px; background-color: #D9EDF7; " >
+        <div class="col-md-12">
+    
+         <!--<form class="form-horizontal" role="form" action="{$fsc->url()}" enctype="multipart/form-data" name="for_editar_chasis" method="post" > -->
+            <div class="col-md-10">
+                
+                <div class="form-group">
+        
+                    <label><strong>Chasis</strong></label>
+                    <input type="text" name="chasis" id="id" class="form-control" readonly="readonly" value="{$fsc->editar->chasis}">
+                </div>
+                <div class="form-group">
+                    <label><strong>Descripción</strong></label>
+                    <textarea class="form-control"  name="descripcion" rows="2" readonly="readonly">{$fsc->editar->descripcion}</textarea>
+                </div>
+                <div class="form-group">
+                    <label><strong>Fabricante</strong></label>
+                    <input type="text" name="fabricante" id="fabricante" class="form-control" readonly="readonly" value="{$fsc->editar->fabricante}">
+                    
+                </div>
+                
+                
+                <div class="form-group">
+                    {if condition="$fsc->editar->logo"}
+                    <label><strong>Subir otra imagen</strong></label>
+                    {else}
+                    <label><strong>Subir imagen</strong></label>
+                    {/if}
+                    <input type="file" name="logo" class="input-file" accept="image/gif, image/jpeg, image/png">
+                    <p class="help-block">El tamaño de la imágen debe ser inferior a 1Mb.</p>
+                </div>
+            </div>
+    
+            <div class="col-md-4">
+                
+                {if condition="$fsc->editar->logo"}
+                <div class="thumbnail" style="margin-top: 25px;">
+                <img src="{$fsc->editar->logo}" />
+                </div>
+                {/if}
+            
+                <!--Esto es un comentario-->
+                
+
+                
+        
+            </div>        
+        
+  
+        
+
+
+    </div>
+    </div>    
+    </div>
+            <div class="modal-footer">
+
+
+                <button type="submit" class="btn btn-success">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                            &nbsp; Guardar
+                </button>
+                <button type="button" class="btn btn-info" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-share" aria-hidden="true"></span>    
+                            &nbsp; Cerrar
+                </button>
+
+            </div>
+        </div>
+      </div>
+    </div>
+</form>
+{/if}
+
+
+{include="footer"}

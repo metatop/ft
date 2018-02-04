@@ -1,0 +1,181 @@
+{include="header"}
+
+<script type="text/javascript">
+    $(document).ready(function() {
+      /* Todo lo que metas aquí es equivalente a un evento onload() */
+      document.getElementById('buscar').focus(); //lleva el foco al campo indicado
+      {if="$fsc->editar"} 
+      $("#ModalEditar").modal('show'); //Carga el formulario modal si hay edición
+      {/if}
+          
+   });
+</script>
+
+<div class="container-fluid" style="margin-top: 10px; margin-bottom: 10px;">
+    Puedes buscar por modelo o chasis
+    <div class="row">
+
+        <form name="f_custom_search" action="{$fsc->url()}" method="post" class="form">
+            <div class="col-sm-4 col-xs-12">
+                <div class="input-group">
+                    <input class="form-control" type="text" name="query" id="buscar" value="{$fsc->query}" autocomplete="off" placeholder="Buscar"/>
+                    <span class="input-group-btn hidden-sm">
+                        <button class="btn btn-primary" type="submit">
+                           <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                </div>
+            </div> 
+
+            <div class="col-sm-2">
+                <div class="checkbox">
+                    <label>
+                          <input type="checkbox" name="check_todos" {if="$fsc->todos"} checked="checked" {/if} value="TRUE" onchange="this.form.submit()" /> 
+                          Listar todos los aparatos
+                    </label>
+                 </div> 
+            </div> 
+        </form>
+
+        <div class="col-sm-3">
+            <div class="btn-group hidden-xs">
+                <a class="btn btn-sm btn-default" href="{$fsc->url()}" title="Recargar la página">
+                   <span class="glyphicon glyphicon-refresh"></span>
+                </a>
+            </div>
+            <div class="btn-group">
+                <a class="btn btn-sm btn-success" href="index.php?page=nuevo_aparato_averia" target="_self">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span class="hidden-xs">&nbsp; Nuevo aparato</span>
+                </a>
+            </div>    
+        </div>
+    </div>    
+    
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th class="text-left">ID</th>
+            <th class="text-left">Modelo</th>
+            <th class="text-left">Marca</th>
+            <th class="text-left">Tipo de aparato</th>
+            <th class="text-left">chasis</th>
+            <th class="text-left">Ver Averias</th>
+            <th class="text-left">Añadir Averia</th>
+        </tr>
+        
+    </thead>
+   {loop="$fsc->resultados"}
+       <tr>
+           <td><a href="index.php?page=detalle_aparato&id={$value->idaparato}" target="_blank" title="Ver detalle de éste aparato" class="glyphicon glyphicon-zoom-in"></a></td>
+           <td>
+               <a href="{$fsc->url()}&id={$value->idaparato}" title="Ver detalle de éste aparato resumido">{$value->modelo}</a>
+
+           </td>
+
+           <td><a href="index.php?page=detalle_marca&folder=documarcas&id={$value->marca}" target="_blank"title="Ver detalle de ésta Marca">{$value->marca}</a></td>       
+           <td>{$value->tipo}</a></td>
+           {if="$value->chasis==' Desconocido'"}
+           <td>{$value->chasis}</td>
+           {else}
+           <td><a href="index.php?page=listado_averias_por_chasis&cod={$value->chasis}" target="_blank" title="Ver averías de éste chasis">{$value->chasis}</a></td>
+           {/if}
+           <td><a href="index.php?page=listado_averias_por_aparato&cod={$value->idaparato}" target="_blank" title="Ver averías de éste aparato">Averias</a></td>
+           <td><a href="index.php?page=nueva_averia_aparato&id={$value->idaparato}" target="_blank" title="Añadir nueva avería a éste aparato">(+)</a></td>
+       </tr>
+   {else}
+       {if="$fsc->query"}
+       <tr class="warning">
+          <td colspan="6">Ninguna Aparato encontrado. Pulse el botón <b>Nuevo</b> para crear uno.</td>
+       </tr>
+       {/if}
+   {/loop} 
+    
+</table>
+</div>
+
+<!-- FORMULARIO MODAL PARA VER EL DETALLE DEL APARATO -->
+
+{if="$fsc->editar"}
+<form class="form-horizontal" role="form" action="{$fsc->url()}" enctype="multipart/form-data" name="for_editar_aparato" method="post" >
+<div class="modal fade" id="ModalEditar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Detalle del Aparato</h4>
+            </div>
+        <div class="modal-body">
+            
+            <div class="form-group">
+                <input type="hidden" value="{$fsc->editar->idaparato}" name="idaparato" id="idaparato" class="form-control">
+            </div>
+            
+            <div class="row" style="margin-left: 15px; margin-right: 15px; background-color: #D9EDF7; " >
+                <div class="col-md-12">
+    
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                        <label>Modelo</label>
+                        <input type="text" readonly="readonly" value="{$fsc->editar->modelo}" name="modelo" id="modelo" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                        <label>Marca</label>
+                        <input type="text" readonly="readonly" value="{$fsc->editar->marca}" name="marca" id="modelo" class="form-control" />
+                        </div>    
+                    
+                    </div>
+                    <div class="col-md-6">    
+                        
+                        <div class="form-group">
+                        <label>Tipo de Aparato</label>
+                        <input type="text" readonly="readonly" value="{$fsc->editar->tipo}" name="tipo" id="modelo" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                        <label>Chasis</label>
+                        <input type="text" readonly="readonly" value="{$fsc->editar->chasis}" name="chasis" id="modelo" class="form-control" />
+                        </div>
+                    </div>       
+                    
+                    
+                </div>    
+    
+                    <div class="col-md-12">
+
+                        {if condition="$fsc->editar->logo"}
+                        <div class="thumbnail" style="margin-top: 25px;">
+                        <img src="{$fsc->editar->logo}" />
+                        </div>
+                        {/if}
+
+                    </div>        
+                
+            </div>   
+        </div>
+
+                <div class="modal-footer">
+                    
+                    <a class="btn btn-success" href="index.php?page=detalle_aparato&folder=documarcas&id={$fsc->editar->idaparato}" target="_blank" title="Ver o añadir documentos adjuntos a éste aparato"role="button">
+                        <span class="glyphicon glyphicon-file" ></span>
+                        &nbsp; Documentos
+                    </a>
+
+                    <button type="button" class="btn btn-info" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-share" aria-hidden="true"></span>    
+                        &nbsp; Cerrar
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{/if}
+
+
+
+{include="footer"}

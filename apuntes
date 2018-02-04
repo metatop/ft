@@ -1,0 +1,8 @@
+Para saber el valor del autoincrement de una tabla
+
+SELECT AUTO_INCREMENT FROM information_schema.TABLES
+WHERE TABLE_SCHEMA = 'nombre_base_de_datos' 
+AND TABLE_NAME = 'nombre_de_la_tabla'
+
+LLEVAR EL FOCO A UN CAMPO:
+Poner el javascripts justo antes del form
