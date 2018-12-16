@@ -15,7 +15,7 @@ class inicio extends fs_controller
 
     public function __construct() 
     {
-        parent::__construct(__CLASS__, 'Inicio', 'Averias', FALSE, FALSE);
+        parent::__construct(__CLASS__, 'Videos de ayuda', 'Averías');
     }
     
     protected function private_core() 
