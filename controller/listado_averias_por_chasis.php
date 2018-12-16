@@ -20,7 +20,7 @@ class listado_averias_por_chasis extends fs_controller
 
     public function __construct() 
     {
-        parent::__construct(__CLASS__, 'Listado Averias por Chasis', 'Averias');
+        parent::__construct(__CLASS__, 'Listado Averias por Chasis');
     }
     
     protected function private_core() 
